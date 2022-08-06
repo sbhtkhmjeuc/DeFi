@@ -42,4 +42,23 @@ bytecode = compiled_sol["contracts"]["SimpleStorage.sol"]["SimpleStorage"]["evm"
 # Getting the ABI
 abi = compiled_sol["contracts"]["SimpleStorage.sol"]["SimpleStorage"]["abi"]
 
-w3 = Web3(Web3.HTTPProvider(" "))
+# Connect to Ganache
+w3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545"))
+chain_id = 5777
+my_address = "0x4372873dB4Ae7E90ebB5E796254aB6C272102C3d"
+private_key = "0xc39ba919d594eb798c105a741fd62240ae94a85b70b1d0e2b2bb89d8a7d9d3ed"
+
+# Creating a Contract in Python
+SimpleStorage = w3.eth.contract(abi=abi, bytecode=bytecode)
+nonce = w3.eth.getTransactionCount(my_address) # getting th nonce for the current address
+
+# Building -> Signing -> Seding
+
+# Building 
+transaction = SimpleStorage.constructor().buildTransaction({"chainId":chain_id, "from":my_address, "nonce":nonce})
+
+# Signing
+signed_txn = w3.eth.account.sign_transaction(transaction,private_key=private_key)
+
+# to create enviroment variables in linux you need to to into the terminal and type "export VARIABLE", 
+# and than to view it you need to type in the terminal "echo $VARIABLE" 
