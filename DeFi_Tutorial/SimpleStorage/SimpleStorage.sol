@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0;
-
+pragma solidity ^0.6.0;
 contract SimpleStorage {
  
     uint256 favoriteNumber; // when you don't initilize a numnber variable it will initialized to 0!
