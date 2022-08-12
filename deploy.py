@@ -1,6 +1,6 @@
-from distutils.file_util import copy_file
+# clearfrom distutils.file_util import copy_file
 from http.client import HTTPException
-from solcx import compile_standard, get_solc_version
+from solcx import compile_standard, install_solc
 import json
 from web3 import Web3
 import os
@@ -9,9 +9,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+
 # Reading the Solidity code with the "file" module, and moving it into a local variable
 with open(
-    r"/home/sbhtkhmjeuc/Desktop/DeFi/DeFi_Tutorial/Web3.py/compiled_sol.json", "r"
+    r"/home/sbhtkhmjeuc/Desktop/DeFi/DeFi/DeFi_Tutorial/SimpleStorage/SimpleStorage.sol", "r"
 ) as file:
     simple_storage_file = file.read()
     print(simple_storage_file)
@@ -35,7 +36,7 @@ compiled_sol = compile_standard(
 )
 
 with open(
-    r"/home/sbhtkhmjeuc/Desktop/DeFi/DeFi_Tutorial/Web3.py/compiled_sol.json", "w"
+    r"/home/sbhtkhmjeuc/Desktop/DeFi/DeFi/DeFi_Tutorial/Web3.py/compiled_sol.json", "w"
 ) as file:
     json.dump(compiled_sol, file)
 
@@ -49,11 +50,11 @@ abi = compiled_sol["contracts"]["SimpleStorage.sol"]["SimpleStorage"]["abi"]
 
 # Connect to Ganache
 w3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545"))
-chain_id = 5777
-my_address = "0x9ab039DDa3a34b16204f3C370458725941d02a58"
-# private_key = "0xc39ba919d594eb798c105a741fd62240ae94a85b70b1d0e2b2bb89d8a7d9d3ed"
+chain_id = 1337
+my_address = "0x2B4f7E4f57459B451f7Da2236766D614BE49671f"
+private_key = "0x3eddc7c98f4ee67e9639b1a3099caf4d0d389157dfdec5c7877e2d969b241b52"
 # you can also create an envoriment variable for the private key and access it with
-private_key = os.getenv("PRIVATE_KEY")
+# private_key = os.getenv("PRIVATE_KEY")
 
 # Creating a Contract in Python
 SimpleStorage = w3.eth.contract(abi=abi, bytecode=bytecode)
@@ -74,5 +75,4 @@ signed_txn = w3.eth.account.sign_transaction(transaction, private_key=private_ke
 # to create enviroment variables in linux you need to to into the terminal and type "export VARIABLE",
 # and than to view it you need to type in the terminal "echo $VARIABLE"
 # you can to the Obsidian Notebook and find a file named "What are Environment Variables ? with Examples on Windows & Linux"
-print(get_solc_version())
-print(signed_txn)
+# print(signed_txn)
